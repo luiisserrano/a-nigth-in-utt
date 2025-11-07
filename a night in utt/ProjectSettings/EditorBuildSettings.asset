@@ -23,4 +23,19 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/delToroGame.unity
     guid: 5e7d002dc8a865040a8d34c44e050505
+  - enabled: 1
+    path: Assets/Scenes/mapa3.unity
+    guid: 36785315346037443a404c0526fd41a2
+  - enabled: 1
+    path: Assets/Scenes/EdificioBPB.unity
+    guid: 945beb56f2471a34cad81aa390c21f75
+  - enabled: 1
+    path: Assets/Scenes/EdificioBPA.unity
+    guid: 232650be32365b749ab76157164b0f4f
+  - enabled: 1
+    path: Assets/Scenes/mapa4.unity
+    guid: bf810fea6b5c7ed4e9fcd902e7848e14
+  - enabled: 1
+    path: Assets/Scenes/mapa5.unity
+    guid: ff88ea5071622f242896caab48a50260
   m_configObjects: {}

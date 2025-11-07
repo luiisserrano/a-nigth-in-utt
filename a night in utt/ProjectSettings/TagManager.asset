@@ -14,6 +14,14 @@ TagManager:
   - zonaABaAA
   - zonaAAaAB
   - delToro
+  - zonaABa4
+  - zonaABa3
+  - mapa4aB
+  - zonaBBaBA
+  - zonaBBa4
+  - zona4a5
+  - julie
+  - jdialog
   layers:
   - Default
   - TransparentFX
@@ -56,4 +64,7 @@ TagManager:
     locked: 0
   - name: 1
     uniqueID: 1465918949
+    locked: 0
+  - name: 2
+    uniqueID: 2944865145
     locked: 0

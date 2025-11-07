@@ -95,6 +95,34 @@ public class player : MonoBehaviour
 
             SceneManager.LoadScene("EdificioAPA"); 
         }
+        if (collision.CompareTag("zonaABa3"))
+        {
+
+            SceneManager.LoadScene("mapa3"); 
+        }
+
+        if (collision.CompareTag("mapa4aB"))
+        {
+
+            SceneManager.LoadScene("EdificioBPB");
+        }
+
+        if (collision.CompareTag("zonaBBaBA"))
+        {
+
+            SceneManager.LoadScene("EdificioBPA");
+        }
+        if (collision.CompareTag("zonaBBa4"))
+        {
+
+            SceneManager.LoadScene("mapa4");
+        }
+        if (collision.CompareTag("zona4a5"))
+        {
+
+            SceneManager.LoadScene("mapa5");
+        }
+
         if (collision.CompareTag("zonaAAaAB"))
         {
 
