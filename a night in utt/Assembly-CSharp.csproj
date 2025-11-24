@@ -56,12 +56,15 @@
     <Compile Include="Assets\Scrips\CameraMap2.cs" />
     <Compile Include="Assets\Scrips\CameraFollow2D.cs" />
     <Compile Include="Assets\Scrips\CameraChildLimit.cs" />
+    <Compile Include="Assets\Scrips\SpawnOnCollision.cs" />
     <Compile Include="Assets\Scrips\SceneTransition.cs" />
     <Compile Include="Assets\Scrips\ZonePortalToScene0.cs" />
     <Compile Include="Assets\Scrips\MainMenu.cs" />
     <Compile Include="Assets\Scrips\SolidKinematic.cs" />
     <Compile Include="Assets\Scrips\PlayerAnimation.cs" />
     <Compile Include="Assets\Scrips\player.cs" />
+    <Compile Include="Assets\Scrips\RouletteSprite.cs" />
+    <Compile Include="Assets\Scrips\BackgroundMusic.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

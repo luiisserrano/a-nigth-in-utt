@@ -22,6 +22,8 @@ TagManager:
   - zona4a5
   - julie
   - jdialog
+  - dialog
+  - student
   layers:
   - Default
   - TransparentFX
