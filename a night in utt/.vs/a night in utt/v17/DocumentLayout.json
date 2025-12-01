@@ -1,25 +1,29 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Dell\\source\\a-nigth-in-utt\\a night in utt\\",
+  "WorkspaceRootPath": "C:\\a nigth in utt\\a-nigth-in-utt\\a night in utt\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Dell\\source\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\a nigth in utt\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\Sqlite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scrips\\Sqlite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\a nigth in utt\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scrips\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Dell\\source\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\RouletteSprite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\a nigth in utt\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\RouletteSprite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scrips\\RouletteSprite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Dell\\source\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\BackgroundMusic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\a nigth in utt\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\BackgroundMusic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scrips\\BackgroundMusic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Dell\\source\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\SceneTransition.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\a nigth in utt\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\SceneTransition.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scrips\\SceneTransition.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Dell\\source\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\MainMenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\a nigth in utt\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\MainMenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scrips\\MainMenu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -33,25 +37,49 @@
           "SelectedChildIndex": 3,
           "Children": [
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "RouletteSprite.cs",
-              "DocumentMoniker": "C:\\Users\\Dell\\source\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\RouletteSprite.cs",
-              "RelativeDocumentMoniker": "Assets\\Scrips\\RouletteSprite.cs",
-              "ToolTip": "C:\\Users\\Dell\\source\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\RouletteSprite.cs",
-              "RelativeToolTip": "Assets\\Scrips\\RouletteSprite.cs",
-              "ViewState": "AgIAAGMAAAAAAAAAAAAQwHMAAAABAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "Sqlite.cs",
+              "DocumentMoniker": "C:\\a nigth in utt\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\Sqlite.cs",
+              "RelativeDocumentMoniker": "Assets\\Scrips\\Sqlite.cs",
+              "ToolTip": "C:\\a nigth in utt\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\Sqlite.cs",
+              "RelativeToolTip": "Assets\\Scrips\\Sqlite.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAoAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T12:40:26.888Z",
+              "WhenOpened": "2025-12-01T15:18:58.737Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
+              "Title": "RouletteSprite.cs",
+              "DocumentMoniker": "C:\\a nigth in utt\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\RouletteSprite.cs",
+              "RelativeDocumentMoniker": "Assets\\Scrips\\RouletteSprite.cs",
+              "ToolTip": "C:\\a nigth in utt\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\RouletteSprite.cs",
+              "RelativeToolTip": "Assets\\Scrips\\RouletteSprite.cs",
+              "ViewState": "AgIAAGMAAAAAAAAAAAAQwHMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T12:40:26.888Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "SceneTransition.cs",
-              "DocumentMoniker": "C:\\Users\\Dell\\source\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\SceneTransition.cs",
+              "DocumentMoniker": "C:\\a nigth in utt\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\SceneTransition.cs",
               "RelativeDocumentMoniker": "Assets\\Scrips\\SceneTransition.cs",
-              "ToolTip": "C:\\Users\\Dell\\source\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\SceneTransition.cs",
+              "ToolTip": "C:\\a nigth in utt\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\SceneTransition.cs",
               "RelativeToolTip": "Assets\\Scrips\\SceneTransition.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -59,11 +87,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "MainMenu.cs",
-              "DocumentMoniker": "C:\\Users\\Dell\\source\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\MainMenu.cs",
+              "DocumentMoniker": "C:\\a nigth in utt\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\MainMenu.cs",
               "RelativeDocumentMoniker": "Assets\\Scrips\\MainMenu.cs",
-              "ToolTip": "C:\\Users\\Dell\\source\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\MainMenu.cs",
+              "ToolTip": "C:\\a nigth in utt\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\MainMenu.cs",
               "RelativeToolTip": "Assets\\Scrips\\MainMenu.cs",
               "ViewState": "AgIAABIAAAAAAAAAAAAQwCMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -71,11 +99,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "player.cs",
-              "DocumentMoniker": "C:\\Users\\Dell\\source\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\player.cs",
+              "DocumentMoniker": "C:\\a nigth in utt\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\player.cs",
               "RelativeDocumentMoniker": "Assets\\Scrips\\player.cs",
-              "ToolTip": "C:\\Users\\Dell\\source\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\player.cs",
+              "ToolTip": "C:\\a nigth in utt\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\player.cs",
               "RelativeToolTip": "Assets\\Scrips\\player.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -84,15 +112,25 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "BackgroundMusic.cs",
-              "DocumentMoniker": "C:\\Users\\Dell\\source\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\BackgroundMusic.cs",
+              "DocumentMoniker": "C:\\a nigth in utt\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\BackgroundMusic.cs",
               "RelativeDocumentMoniker": "Assets\\Scrips\\BackgroundMusic.cs",
-              "ToolTip": "C:\\Users\\Dell\\source\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\BackgroundMusic.cs",
+              "ToolTip": "C:\\a nigth in utt\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\BackgroundMusic.cs",
               "RelativeToolTip": "Assets\\Scrips\\BackgroundMusic.cs",
               "ViewState": "AgIAABgAAAAAAAAAAAAAACsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-19T13:34:07.4Z"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 160,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
             }
           ]
         }

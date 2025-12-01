@@ -7,12 +7,12 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scrips\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Dell\\source\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\BackgroundMusic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scrips\\BackgroundMusic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Dell\\source\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\RouletteSprite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scrips\\RouletteSprite.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Dell\\source\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\BackgroundMusic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scrips\\BackgroundMusic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Dell\\source\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\SceneTransition.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -30,30 +30,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "BackgroundMusic.cs",
-              "DocumentMoniker": "C:\\Users\\Dell\\source\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\BackgroundMusic.cs",
-              "RelativeDocumentMoniker": "Assets\\Scrips\\BackgroundMusic.cs",
-              "ToolTip": "C:\\Users\\Dell\\source\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\BackgroundMusic.cs",
-              "RelativeToolTip": "Assets\\Scrips\\BackgroundMusic.cs",
-              "ViewState": "AgIAABgAAAAAAAAAAAAAACsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T13:34:07.4Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
               "Title": "RouletteSprite.cs",
               "DocumentMoniker": "C:\\Users\\Dell\\source\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\RouletteSprite.cs",
               "RelativeDocumentMoniker": "Assets\\Scrips\\RouletteSprite.cs",
               "ToolTip": "C:\\Users\\Dell\\source\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\RouletteSprite.cs",
               "RelativeToolTip": "Assets\\Scrips\\RouletteSprite.cs",
-              "ViewState": "AgIAADcAAAAAAAAAAAAAAEoAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAGMAAAAAAAAAAAAQwHMAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-19T12:40:26.888Z",
               "EditorCaption": ""
@@ -90,10 +77,22 @@
               "RelativeDocumentMoniker": "Assets\\Scrips\\player.cs",
               "ToolTip": "C:\\Users\\Dell\\source\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\player.cs",
               "RelativeToolTip": "Assets\\Scrips\\player.cs",
-              "ViewState": "AgIAAAQAAAAAAAAAAAAAAAwAAAA/AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-12T21:31:21.013Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "BackgroundMusic.cs",
+              "DocumentMoniker": "C:\\Users\\Dell\\source\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\BackgroundMusic.cs",
+              "RelativeDocumentMoniker": "Assets\\Scrips\\BackgroundMusic.cs",
+              "ToolTip": "C:\\Users\\Dell\\source\\a-nigth-in-utt\\a night in utt\\Assets\\Scrips\\BackgroundMusic.cs",
+              "RelativeToolTip": "Assets\\Scrips\\BackgroundMusic.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAACsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T13:34:07.4Z"
             }
           ]
         }
