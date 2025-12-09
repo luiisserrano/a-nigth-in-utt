@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Mono.Data.Sqlite;
 using System.Data;
-using System;
 using System.IO;
+using UnityEngine;
 
 public class Sqlite : MonoBehaviour
 {
@@ -13,108 +10,28 @@ public class Sqlite : MonoBehaviour
 
     private void Awake()
     {
-        // Patrón Singleton para que sobreviva entre escenas
+        // PatrÃ³n Singleton
         if (instance == null)
         {
             instance = this;
-            // ESTA LÍNEA ES LA MAGIA: Hace que el objeto no se borre al cambiar de escena
             DontDestroyOnLoad(gameObject);
-
-            // Tu código de base de datos
             dbName = "URI=file:" + Path.Combine(Application.persistentDataPath, "DBGame.db");
-            Debug.Log("Base de datos ubicada en: " + dbName);
+            Debug.Log("Ruta de la Base de Datos: " + dbName);
         }
         else
         {
-            // Si volvemos al menú y ya existe un Sqlite, destruimos el nuevo para no tener duplicados
             Destroy(gameObject);
         }
     }
-    // Start is called before the first frame update
+
     void Start()
     {
         CreateTables();
-
-        // Lógica de inicio de sesión:
-        if (ExisteJugador())
-        {
-            CargarJugador();
-        }
-        else
-        {
-            Debug.Log("No se encontró usuario. Creando uno nuevo...");
-            CrearNuevoJugador("Aventurero", 1); // Nombre por defecto y nivel 1
-        }
-    }
-    private bool ExisteJugador()
-    {
-        bool existe = false;
-
-        using (var connection = new SqliteConnection(dbName))
-        {
-            connection.Open();
-            using (var command = connection.CreateCommand())
-            {
-                // Seleccionamos "COUNT" para ver cuántas filas hay. Es más rápido que traer todos los datos.
-                command.CommandText = "SELECT COUNT(*) FROM jugador";
-
-                // ExecuteScalar se usa cuando la consulta devuelve UN solo valor (un número, un string)
-                long count = (long)command.ExecuteScalar();
-
-                if (count > 0) existe = true;
-            }
-            connection.Close();
-        }
-        return existe;
+        InsertarDatosIniciales();
+        Debug.Log("Sqlite inicializado correctamente. Esperando acciÃ³n del jugador...");
     }
 
-    // FUNCIÓN 2: Insertar el nuevo jugador
-    public void CrearNuevoJugador(string nombre, int nivelInicial)
-    {
-        using (var connection = new SqliteConnection(dbName))
-        {
-            connection.Open();
-            using (var command = connection.CreateCommand())
-            {
-                // Usamos PARAMETROS (@nombre, @nivel) para evitar errores y hackeos (SQL Injection)
-                command.CommandText = "INSERT INTO jugador (nombre_usuario, nivel, experiencia, fecha_registro) VALUES (@nombre, @nivel, 0, datetime('now', 'localtime'))";
-
-                command.Parameters.Add(new SqliteParameter("@nombre", nombre));
-                command.Parameters.Add(new SqliteParameter("@nivel", nivelInicial));
-
-                command.ExecuteNonQuery();
-                Debug.Log($"Jugador '{nombre}' creado exitosamente.");
-            }
-            connection.Close();
-        }
-    }
-
-    // FUNCIÓN EXTRA: Cargar datos para verificar
-    private void CargarJugador()
-    {
-        using (var connection = new SqliteConnection(dbName))
-        {
-            connection.Open();
-            using (var command = connection.CreateCommand())
-            {
-                // Traemos el último jugador creado (o el primero, según lógica)
-                command.CommandText = "SELECT nombre_usuario, nivel FROM jugador LIMIT 1";
-
-                using (IDataReader reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        // Leemos los datos de las columnas 0 (nombre) y 1 (nivel)
-                        string nombre = reader.GetString(0);
-                        int nivel = reader.GetInt32(1);
-                        Debug.Log($"Bienvenido de vuelta, {nombre}. Nivel: {nivel}");
-                    }
-                }
-            }
-            connection.Close();
-        }
-    }
-
+    // --- CREACIÃ“N DE TABLAS ---
     private void CreateTables()
     {
         using (var connection = new SqliteConnection(dbName))
@@ -123,29 +40,181 @@ public class Sqlite : MonoBehaviour
             using (var command = connection.CreateCommand())
             {
                 string sqlcreation = "";
-
-                // -- TUS 10 TABLAS (Tal cual las tenías) --
-                sqlcreation += "CREATE TABLE IF NOT EXISTS jugador (id_jugador INTEGER PRIMARY KEY AUTOINCREMENT, nombre_usuario TEXT NOT NULL, nivel INTEGER DEFAULT 1, experiencia INTEGER DEFAULT 0, fecha_registro TEXT); ";
-                sqlcreation += "CREATE TABLE IF NOT EXISTS item (id_item INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT NOT NULL, descripcion TEXT, tipo TEXT); ";
-                sqlcreation += "CREATE TABLE IF NOT EXISTS jefe (id_jefe INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT NOT NULL, descripcion TEXT, dificultad TEXT, nivel_requerido INTEGER); ";
-                sqlcreation += "CREATE TABLE IF NOT EXISTS jugador_item (id_jugador_item INTEGER PRIMARY KEY AUTOINCREMENT, id_jugador INTEGER, id_item INTEGER, cantidad INTEGER DEFAULT 1, fecha_obtenido TEXT, FOREIGN KEY (id_jugador) REFERENCES jugador(id_jugador), FOREIGN KEY (id_item) REFERENCES item(id_item)); ";
-                sqlcreation += "CREATE TABLE IF NOT EXISTS jefe_item_requerido (id_jefe_item INTEGER PRIMARY KEY AUTOINCREMENT, id_jefe INTEGER, id_item INTEGER, cantidad_requerida INTEGER, FOREIGN KEY (id_jefe) REFERENCES jefe(id_jefe), FOREIGN KEY (id_item) REFERENCES item(id_item)); ";
-                sqlcreation += "CREATE TABLE IF NOT EXISTS desafio (id_desafio INTEGER PRIMARY KEY AUTOINCREMENT, id_jefe INTEGER, tipo TEXT, enunciado TEXT, dificultad TEXT, FOREIGN KEY (id_jefe) REFERENCES jefe(id_jefe)); ";
-                sqlcreation += "CREATE TABLE IF NOT EXISTS jugador_desafio (id_jugador_desafio INTEGER PRIMARY KEY AUTOINCREMENT, id_jugador INTEGER, id_desafio INTEGER, completado INTEGER DEFAULT 0, puntaje_obtenido INTEGER, fecha_realizado TEXT, FOREIGN KEY (id_jugador) REFERENCES jugador(id_jugador), FOREIGN KEY (id_desafio) REFERENCES desafio(id_desafio)); ";
-                sqlcreation += "CREATE TABLE IF NOT EXISTS pregunta_desafio (id_pregunta INTEGER PRIMARY KEY AUTOINCREMENT, id_desafio INTEGER, enunciado TEXT, tipo TEXT, FOREIGN KEY (id_desafio) REFERENCES desafio(id_desafio)); ";
-                sqlcreation += "CREATE TABLE IF NOT EXISTS opcion_pregunta (id_opcion INTEGER PRIMARY KEY AUTOINCREMENT, id_pregunta INTEGER, texto TEXT, es_correcta INTEGER DEFAULT 0, FOREIGN KEY (id_pregunta) REFERENCES pregunta_desafio(id_pregunta)); ";
-                sqlcreation += "CREATE TABLE IF NOT EXISTS jugador_respuesta (id_jugador_respuesta INTEGER PRIMARY KEY AUTOINCREMENT, id_jugador INTEGER, id_pregunta INTEGER, id_opcion INTEGER, es_correcta INTEGER, fecha_respuesta TEXT, FOREIGN KEY (id_jugador) REFERENCES jugador(id_jugador), FOREIGN KEY (id_pregunta) REFERENCES pregunta_desafio(id_pregunta), FOREIGN KEY (id_opcion) REFERENCES opcion_pregunta(id_opcion)); ";
+                
+                // Unidad 1
+                sqlcreation += "CREATE TABLE IF NOT EXISTS desafios (id INTEGER PRIMARY KEY AUTOINCREMENT, Desafio TEXT NOT NULL, respuesta TEXT NOT NULL);";
+                // Unidad 2
+                sqlcreation += "CREATE TABLE IF NOT EXISTS desafios2 (id INTEGER PRIMARY KEY AUTOINCREMENT, Desafio TEXT NOT NULL, respuesta TEXT NOT NULL);";
+                // Unidad 3
+                sqlcreation += "CREATE TABLE IF NOT EXISTS desafios3 (id INTEGER PRIMARY KEY AUTOINCREMENT, Desafio TEXT NOT NULL, respuesta TEXT NOT NULL);";
+                // Items
+                sqlcreation += "CREATE TABLE IF NOT EXISTS items (id INTEGER PRIMARY KEY AUTOINCREMENT, item TEXT NOT NULL, activo INTEGER NOT NULL);";
 
                 command.CommandText = sqlcreation;
                 command.ExecuteNonQuery();
             }
             connection.Close();
         }
+
+        Debug.Log("Tablas 'desafios', 'desafios2', 'desafios3' e 'items' verificadas/creadas correctamente.");
     }
 
-    // Update is called once per frame
-    void Update()
+    // --- INSERCIÃ“N DE DATOS INICIALES ---
+    private void InsertarDatosIniciales()
     {
+        using (var connection = new SqliteConnection(dbName))
+        {
+            connection.Open();
 
+            // -----------------------
+            // Unidad 1
+            // -----------------------
+            using (var checkCmd = connection.CreateCommand())
+            {
+                checkCmd.CommandText = "SELECT COUNT(*) FROM desafios";
+                if ((long)checkCmd.ExecuteScalar() == 0)
+                {
+                    using (var transaction = connection.BeginTransaction())
+                    {
+                        using (var command = connection.CreateCommand())
+                        {
+                            command.Transaction = transaction;
+                            command.CommandText = @"
+                                INSERT INTO desafios (Desafio, Respuesta) VALUES
+                                ('P1U1','R1'),('P2U1','R2'),('P3U1','R1'),('P4U1','R3'),
+                                ('P5U1','R2'),('P6U1','R2'),('P7U1','R3'),('P8U1','R1'),
+                                ('P9U1','R2'),('P10U1','R3'),('P11U1','R2'),('P12U1','R3'),
+                                ('P13U1','R2'),('P14U1','R1');";
+                            command.ExecuteNonQuery();
+                            transaction.Commit();
+                        }
+                    }
+                    Debug.Log("Tabla 'desafios' (Unidad 1) creada y poblada correctamente.");
+                }
+            }
+
+            // -----------------------
+            // Unidad 2
+            // -----------------------
+            using (var checkCmd2 = connection.CreateCommand())
+            {
+                checkCmd2.CommandText = "SELECT COUNT(*) FROM desafios2";
+                if ((long)checkCmd2.ExecuteScalar() == 0)
+                {
+                    using (var transaction = connection.BeginTransaction())
+                    {
+                        using (var command = connection.CreateCommand())
+                        {
+                            command.Transaction = transaction;
+                            command.CommandText = @"
+                                INSERT INTO desafios2 (Desafio, Respuesta) VALUES
+                                ('P1U2','R1'),('P2U2','R1'),('P3U2','R3'),('P4U2','R3'),
+                                ('P5U2','R1'),('P6U2','R2'),('P7U2','R1'),('P8U2','R3'),
+                                ('P9U2','R2'),('P10U2','R3'),('P11U2','R3'),('P12U2','R2'),
+                                ('P13U2','R1'),('P14U2','R3');";
+                            command.ExecuteNonQuery();
+                            transaction.Commit();
+                        }
+                    }
+                    Debug.Log("Tabla 'desafios2' (Unidad 2) creada y poblada correctamente.");
+                }
+            }
+
+            // -----------------------
+            // Unidad 3
+            // -----------------------
+            using (var checkCmd3 = connection.CreateCommand())
+            {
+                checkCmd3.CommandText = "SELECT COUNT(*) FROM desafios3";
+                if ((long)checkCmd3.ExecuteScalar() == 0)
+                {
+                    using (var transaction = connection.BeginTransaction())
+                    {
+                        using (var command = connection.CreateCommand())
+                        {
+                            command.Transaction = transaction;
+                            command.CommandText = @"
+                                INSERT INTO desafios3 (Desafio, Respuesta) VALUES
+                                ('P1U3','R1'),('P2U3','R3'),('P3U3','R2'),('P4U3','R2'),
+                                ('P5U3','R1'),('P6U3','R1'),('P7U3','R3'),('P8U3','R1'),
+                                ('P9U3','R2'),('P10U3','R3'),('P11U3','R2'),('P12U3','R1'),
+                                ('P13U3','R2'),('P14U3','R1');";
+                            command.ExecuteNonQuery();
+                            transaction.Commit();
+                        }
+                    }
+                    Debug.Log("Tabla 'desafios3' (Unidad 3) creada y poblada correctamente.");
+                }
+            }
+
+            // -----------------------
+            // Items
+            // -----------------------
+            using (var checkCmdItems = connection.CreateCommand())
+            {
+                checkCmdItems.CommandText = "SELECT COUNT(*) FROM items";
+                if ((long)checkCmdItems.ExecuteScalar() == 0)
+                {
+                    using (var transaction = connection.BeginTransaction())
+                    {
+                        using (var command = connection.CreateCommand())
+                        {
+                            command.Transaction = transaction;
+                            command.CommandText = @"
+                                INSERT INTO items (item, activo) VALUES
+                                ('Item1',0),('Item2',0),('Item3',0),('Item4',0),
+                                ('Item5',0),('Item6',0),('Item7',0),('Item8',0),
+                                ('Item9',0),('Item10',0),('Item11',0),('Item12',0);";
+                            command.ExecuteNonQuery();
+                            transaction.Commit();
+                        }
+                    }
+                    Debug.Log("Tabla 'items' creada y poblada correctamente.");
+                }
+            }
+
+            connection.Close();
+        }
+    }
+
+    // --- MÃ‰TODOS GENERALES ---
+    public DataTable EjecutarConsulta(string sql)
+    {
+        DataTable dt = new DataTable();
+        using (var connection = new SqliteConnection(dbName))
+        {
+            connection.Open();
+            using (var command = connection.CreateCommand())
+            {
+                command.CommandText = sql;
+                using (IDataReader reader = command.ExecuteReader())
+                {
+                    dt.Load(reader);
+                }
+            }
+            connection.Close();
+        }
+        return dt;
+    }
+
+    public DataRow ObtenerDesafioPorIndex(int index)
+    {
+        string sql = "SELECT * FROM desafios LIMIT 1 OFFSET " + index;
+        DataTable dt = EjecutarConsulta(sql);
+        return dt.Rows.Count > 0 ? dt.Rows[0] : null;
+    }
+
+    public DataRow ObtenerDesafioPorIndexUnidad2(int index)
+    {
+        string sql = "SELECT * FROM desafios2 LIMIT 1 OFFSET " + index;
+        DataTable dt = EjecutarConsulta(sql);
+        return dt.Rows.Count > 0 ? dt.Rows[0] : null;
+    }
+
+    public DataRow ObtenerDesafioPorIndexUnidad3(int index)
+    {
+        string sql = "SELECT * FROM desafios3 LIMIT 1 OFFSET " + index;
+        DataTable dt = EjecutarConsulta(sql);
+        return dt.Rows.Count > 0 ? dt.Rows[0] : null;
     }
 }

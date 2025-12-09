@@ -41,4 +41,20 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ItemRule.unity
     guid: 69eb4494a19a04c4ea4c0434a09e3db9
+  - enabled: 1
+    path: Assets/Scenes/ganaste.unity
+    guid: 8bac18f202f26a840aff3129a73ecd4c
+  - enabled: 1
+    path: Assets/Scenes/perdiste.unity
+    guid: 16820cb108d544b48bc5365d166f982c
+  - enabled: 1
+    path: Assets/Scenes/ramiroGame.unity
+    guid: 09fe05e612b6ceb41b4060f05672b076
+  - enabled: 1
+    path: Assets/Scenes/rosalesGame.unity
+    guid: 6165478aa135bbb4dab9ac7800f9fc6b
+  - enabled: 1
+    path: Assets/Scenes/igmarGame.unity
+    guid: a72f5f3ad2ec2234fbcc0d9cabc16f4b
   m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0

@@ -1,11 +1,11 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BackgroundMusic : MonoBehaviour
 {
-    public AudioSource audioSource;   // Arrastra aquí tu música
-
-    public bool keepBetweenScenes = true; // Mantener música en todas las escenas
-    public float volume = 0.5f;           // Volumen por defecto
+    public AudioSource audioSource;
+    public bool keepBetweenScenes = true;
+    public float volume = 0.5f;
 
     private void Awake()
     {
@@ -13,7 +13,7 @@ public class BackgroundMusic : MonoBehaviour
         {
             DontDestroyOnLoad(gameObject);
 
-            // Evitar duplicados si ya existe otro con este script
+            // Evitar duplicados
             BackgroundMusic[] musics = FindObjectsOfType<BackgroundMusic>();
             if (musics.Length > 1)
             {
@@ -23,6 +23,23 @@ public class BackgroundMusic : MonoBehaviour
         }
 
         SetupMusic();
+
+        // ðŸ”Š SUSCRIBIMOS EL EVENTO PARA DETENER LA MUSICA
+        SceneManager.sceneLoaded += OnSceneChanged;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneChanged;
+    }
+
+    private void OnSceneChanged(Scene scene, LoadSceneMode mode)
+    {
+        // ðŸ‘‰ AQUI DECIDES EN QUÃ‰ ESCENA LA MÃšSICA SE DEBE DETENER
+        if (scene.name == "Ruleta" || scene.name == "Menu" || scene.name == "OtraEscena")
+        {
+            audioSource.Stop();
+        }
     }
 
     private void SetupMusic()
@@ -30,13 +47,11 @@ public class BackgroundMusic : MonoBehaviour
         if (audioSource == null)
         {
             audioSource = gameObject.AddComponent<AudioSource>();
-            Debug.LogWarning("No asignaste un AudioSource, se creó uno automáticamente.");
         }
 
         audioSource.loop = true;
         audioSource.volume = volume;
 
-        // Si no está sonando, la reproduce
         if (!audioSource.isPlaying)
             audioSource.Play();
     }

@@ -2,7 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 2
+  serializedVersion: 3
   tags:
   - Fondo
   - player
@@ -24,6 +24,29 @@ TagManager:
   - jdialog
   - dialog
   - student
+  - charly
+  - npc1
+  - zona3aAB
+  - zonaBBa3
+  - zona4aBB
+  - zona5a4
+  - R1
+  - R2
+  - R3
+  - zonaBAaBB
+  - choche
+  - jared
+  - fat
+  - noc
+  - punk
+  - aze
+  - vict
+  - mark
+  - luis
+  - p1
+  - ramiro
+  - rosales
+  - igmar
   layers:
   - Default
   - TransparentFX
@@ -70,3 +93,5 @@ TagManager:
   - name: 2
     uniqueID: 2944865145
     locked: 0
+  m_RenderingLayers:
+  - Default
