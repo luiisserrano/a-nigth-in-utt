@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: 1445868e4981687418a8a6c29eff965c
+  - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
@@ -17,9 +20,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/EdificioAPA.unity
     guid: 46ae750952071aa4582b8eed00002496
-  - enabled: 1
-    path: Assets/Scenes/Menu.unity
-    guid: 1445868e4981687418a8a6c29eff965c
   - enabled: 1
     path: Assets/Scenes/delToroGame.unity
     guid: 5e7d002dc8a865040a8d34c44e050505

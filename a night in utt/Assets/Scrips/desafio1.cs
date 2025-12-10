@@ -102,13 +102,16 @@ public class desafio1 : MonoBehaviour
             return;
         }
 
-        int idSQL = imagenActual + 1;
+        // Usar método unificado para unidad 1
+        DataRow dr = Sqlite.instance.ObtenerRespuestaPorIndiceYUnidad(imagenActual, 1);
+        
+        if (dr == null)
+        {
+            Debug.LogError("No se encontró desafío para index/unidad especificada.");
+            return;
+        }
 
-        DataTable dt = Sqlite.instance.EjecutarConsulta(
-            "SELECT respuesta FROM desafios WHERE id = " + idSQL
-        );
-
-        string correcta = dt.Rows[0]["respuesta"].ToString();
+        string correcta = dr["Respuesta"].ToString();
 
         if (ultimaR == correcta)
         {
@@ -118,6 +121,9 @@ public class desafio1 : MonoBehaviour
             // Si responde 5 correctas, gana
             if (correctas >= 5)
             {
+                // Guardar victoria de DelToro
+                if (Sqlite.instance != null) Sqlite.instance.SetMasterDefeated("delToro");
+                
                 SceneManager.LoadScene("Ganaste");
                 return;
             }

@@ -55,16 +55,14 @@ public class player : MonoBehaviour
 
     void Start()
     {
+        // 1. Inicializar rutas y datos locales
         savePath = Path.Combine(Application.persistentDataPath, "playerSave.json");
-        visitedTagsPath = Path.Combine(Application.persistentDataPath, "playerVisitedTags.json");
         visitCountPath = Path.Combine(Application.persistentDataPath, "visitCount.txt");
 
-        // Leer visitCount para validaciones, pero NO SUMAR aquí
         if (File.Exists(visitCountPath))
             int.TryParse(File.ReadAllText(visitCountPath), out visitCount);
 
-        LoadVisitedTags();
-
+        // 2. Inicializar Diccionarios
         dialogosTags = new Dictionary<string, GameObject[]>()
         {
             {"julie", dialogoJulie},
@@ -82,6 +80,7 @@ public class player : MonoBehaviour
             {"p1", dialogoP1}
         };
 
+        // Spawn guardado
         if (spawnPosition != Vector3.zero)
         {
             transform.position = spawnPosition;
@@ -92,10 +91,10 @@ public class player : MonoBehaviour
         string escena = SceneManager.GetActiveScene().name.ToLower();
         if (escena.Contains("game"))
         {
-            desafio1Ref = FindAnyObjectByType<desafio1>();
-            desafio2Ref = FindAnyObjectByType<desafio2>();
-            desafio3Ref = FindAnyObjectByType<desafio3>();
-            desafio4Ref = FindObjectOfType<desafio4>();
+            desafio1Ref = FindFirstObjectByType<desafio1>();
+            desafio2Ref = FindFirstObjectByType<desafio2>();
+            desafio3Ref = FindFirstObjectByType<desafio3>();
+            desafio4Ref = FindFirstObjectByType<desafio4>();
         }
     }
 
@@ -127,32 +126,45 @@ public class player : MonoBehaviour
             else if (desafio4Ref != null) desafio4Ref.SetRespuestaJugador(respuesta);
 
             // Cambiar al siguiente desafío
-            desafio1Ref?.CambiarDesafio();
-            desafio2Ref?.CambiarDesafio();
-            desafio3Ref?.CambiarDesafio();
-            desafio4Ref?.SiguienteDesafio();
+            // Ya no llamamos CambiarDesafio o SiguienteDesafio aquí abajo.
+            // La lógica interna de SetRespuestaJugador (en desafioX.cs) se encarga de cambiarlo tras el feedback.
 
             // Volver al spawn
             transform.position = new Vector3(-7.251836f, -3.926194f, 0f);
             return;
         }
 
-        // 🔹 Mostrar diálogos
+        // 🔹 Mostrar diálogos generales
         if (dialogosTags.ContainsKey(tag) && dialogosTags[tag] != null)
         {
             StartCoroutine(MostrarDialogosSecuenciales(dialogosTags[tag]));
         }
 
-        // 🔹 ItemRule
+        // 🔹 ItemRule - SOLO validar si ya entró o no en la BD
         foreach (string itemTag in tagsItemRule)
         {
-            if (tag == itemTag && !visitedTags.Contains(tag))
+            if (tag == itemTag)
             {
-                SavePlayerPosition();
-                visitedTags.Add(tag);
-                SaveVisitedTags();
-                SceneManager.LoadScene("ItemRule");
-                return;
+                bool yaEntro = Sqlite.instance.IsStudentVisited(tag);
+
+                if (yaEntro)
+                {
+                    // YA entró → SOLO muestra diálogos
+                    if (dialogosTags.ContainsKey(tag))
+                        StartCoroutine(MostrarDialogosSecuenciales(dialogosTags[tag]));
+                    else if (dialogo != null)
+                        StartCoroutine(MostrarDialogoTemporal(dialogo));
+
+                    return;
+                }
+                else
+                {
+                    // Primera vez → entra a ruleta
+                    SavePlayerPosition();
+                    Sqlite.instance.SetStudentVisited(tag);
+                    SceneManager.LoadScene("ItemRule");
+                    return;
+                }
             }
         }
 
@@ -160,17 +172,15 @@ public class player : MonoBehaviour
         switch (tag)
         {
             case "igmar":
-                if (visitCount >= 3)
-                    SceneManager.LoadScene("igmarGame");
-                else if (dialogo != null)
-                    StartCoroutine(MostrarDialogoTemporal(dialogo));
+                // Requisito: TODOS los items (0 a 11) y TODOS los maestros vencidos
+                HandleIgmarEntry();
                 break;
 
             case "zona1a2": SceneManager.LoadScene("mapa2"); break;
             case "zona2a1": spawnPosition = new Vector3(28.7f, 19.75f, 0f); SceneManager.LoadScene("SampleScene"); break;
-            case "delToro": HandleJugadorConItems("delToro", new int[] {0,1,2}, "delToroGame"); break;
-            case "ramiro": HandleJugadorConItems("ramiro", new int[] {3,4,5}, "ramiroGame"); break;
-            case "rosales": HandleJugadorConItems("rosales", new int[] {6,7,8}, "rosalesGame"); break;
+            case "delToro": HandleJugadorConItems("delToro", Sqlite.instance.GetMasterRequiredItems("delToro"), "delToroGame"); break;
+            case "ramiro": HandleJugadorConItems("ramiro", Sqlite.instance.GetMasterRequiredItems("ramiro"), "ramiroGame"); break;
+            case "rosales": HandleJugadorConItems("rosales", Sqlite.instance.GetMasterRequiredItems("rosales"), "rosalesGame"); break;
             case "zona2aAB": SceneManager.LoadScene("EdificioAPB"); break;
             case "zonaABa2": spawnPosition = new Vector3(10.3f, 11f, 0f); SceneManager.LoadScene("mapa2"); break;
             case "zonaABaAA": SceneManager.LoadScene("EdificioAPA"); break;
@@ -188,23 +198,52 @@ public class player : MonoBehaviour
         }
     }
 
+    private void HandleIgmarEntry()
+    {
+        // 1. Verificar TODOS los items (0 al 11 => 12 items)
+        List<int> collected = Sqlite.instance.GetActiveItemIndices();
+        bool allItems = collected.Count >= 12; // Asumiendo que son 12 items totales
+
+// 2. Verificar Maestros (DelToro, Ramiro, Rosales)
+        bool allMasters = Sqlite.instance.AreAllMastersDefeated();
+
+        // 3. Verificar items especificos de Igmar desde DB (deberían ser todos)
+        int[] requiredIgmar = Sqlite.instance.GetMasterRequiredItems("igmar");
+        bool hasAllItemsIgmar = true;
+        foreach(int req in requiredIgmar)
+        {
+            if(!collected.Contains(req)) { hasAllItemsIgmar = false; break; }
+        }
+
+        Debug.Log($"[Igmar] Items DB check: {hasAllItemsIgmar}. Maestros Vencidos: {allMasters}");
+
+        if (hasAllItemsIgmar && allMasters)
+        {
+            Debug.Log("[Igmar] ACCESO CONCEDIDO (Desafio Final).");
+            SavePlayerPosition();
+            SceneManager.LoadScene("igmarGame");
+        }
+        else
+        {
+            Debug.Log("[Igmar] Acceso Denegado. Faltan items o maestros.");
+            if (dialogo != null) StartCoroutine(MostrarDialogoTemporal(dialogo));
+        }
+    }
+
     private void HandleJugadorConItems(string jugadorTag, int[] requiredItems, string escenaJuego)
     {
-        string usedItemsPath = Path.Combine(Application.persistentDataPath, "usedItems.json");
-        HashSet<int> obtainedItems = new HashSet<int>();
-
-        if (File.Exists(usedItemsPath))
-        {
-            string json = File.ReadAllText(usedItemsPath);
-            PlayerUsedItemsData data = JsonUtility.FromJson<PlayerUsedItemsData>(json);
-            obtainedItems = new HashSet<int>(data.usedIndices);
-        }
+        // Usar Sqlite para verificar items obtenidos
+        List<int> obtainedItems = Sqlite.instance.GetActiveItemIndices();
+        
+        string itemsStr = string.Join(",", obtainedItems);
+        Debug.Log($"[{jugadorTag}] Items obtenidos: [{itemsStr}]. Requeridos: [{string.Join(",", requiredItems)}]");
 
         bool tieneTodos = true;
         foreach (int index in requiredItems)
         {
             if (!obtainedItems.Contains(index))
             {
+                Debug.Log($"[{jugadorTag}] Falta item índice: {index}");
                 tieneTodos = false;
                 break;
             }
@@ -212,11 +251,16 @@ public class player : MonoBehaviour
 
         if (tieneTodos)
         {
+            // Opcional: Validar si este maestro ya fue vencido para no dejar entrar de nuevo?
+            // El usuario no especificó bloquear reentrada, solo "guardara si ganaste".
+            // Dejamos entrar siempre si tiene items.
+            Debug.Log($"[{jugadorTag}] Acceso concedido.");
             SavePlayerPosition();
             SceneManager.LoadScene(escenaJuego);
         }
         else if (dialogo != null)
         {
+            Debug.Log($"[{jugadorTag}] Acceso denegado.");
             StartCoroutine(MostrarDialogoTemporal(dialogo));
         }
     }
@@ -232,23 +276,6 @@ public class player : MonoBehaviour
         };
         string jsonData = JsonUtility.ToJson(saveData, true);
         File.WriteAllText(savePath, jsonData);
-    }
-
-    private void LoadVisitedTags()
-    {
-        if (File.Exists(visitedTagsPath))
-        {
-            string json = File.ReadAllText(visitedTagsPath);
-            VisitedTagsData data = JsonUtility.FromJson<VisitedTagsData>(json);
-            visitedTags = new HashSet<string>(data.tags);
-        }
-        else visitedTags = new HashSet<string>();
-    }
-
-    private void SaveVisitedTags()
-    {
-        VisitedTagsData data = new VisitedTagsData { tags = new List<string>(visitedTags) };
-        File.WriteAllText(visitedTagsPath, JsonUtility.ToJson(data, true));
     }
 
     private System.Collections.IEnumerator MostrarDialogoTemporal(GameObject dialogoObj, bool cargarItemRule = false)
@@ -278,7 +305,9 @@ public class player : MonoBehaviour
 // ----------------- CLASES AUXILIARES -----------------
 [System.Serializable]
 public class PlayerSaveData { public string sceneName; public float positionX, positionY, positionZ; }
+
 [System.Serializable]
 public class VisitedTagsData { public List<string> tags; }
+
 [System.Serializable]
 public class PlayerUsedItemsData { public List<int> usedIndices = new List<int>(); }

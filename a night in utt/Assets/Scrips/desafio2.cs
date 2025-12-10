@@ -88,14 +88,16 @@ public class desafio2 : MonoBehaviour
     {
         if (Sqlite.instance == null) return;
 
-        int idSQL = imagenActual + 1;
+        // Usar método unificado para unidad 2
+        DataRow dr = Sqlite.instance.ObtenerRespuestaPorIndiceYUnidad(imagenActual, 2);
+        
+        if (dr == null)
+        {
+            Debug.LogError("No se encontró desafío para index/unidad especificada.");
+            return;
+        }
 
-        // Aquí se consulta la unidad 2
-        DataTable dt = Sqlite.instance.EjecutarConsulta(
-            "SELECT respuesta FROM desafios2 WHERE id = " + idSQL
-        );
-
-        string correcta = dt.Rows[0]["respuesta"].ToString();
+        string correcta = dr["Respuesta"].ToString();
 
         if (ultimaR == correcta)
         {
@@ -104,6 +106,7 @@ public class desafio2 : MonoBehaviour
 
             if (correctas >= 5)
             {
+                if (Sqlite.instance != null) Sqlite.instance.SetMasterDefeated("ramiro");
                 SceneManager.LoadScene("Ganaste");
                 return;
             }

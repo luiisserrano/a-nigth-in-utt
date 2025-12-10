@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Data;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -126,17 +127,23 @@ public class desafio4 : MonoBehaviour
     {
         string correcta = "";
 
-        switch (unidadActual)
+        // Refactorizado para usar BDD unificada
+        // unidadActual ya tiene 1, 2 o 3
+        if (Sqlite.instance == null)
         {
-            case 1:
-                correcta = respuestasU1[imagenActual];
-                break;
-            case 2:
-                correcta = respuestasU2[imagenActual];
-                break;
-            case 3:
-                correcta = respuestasU3[imagenActual];
-                break;
+            Debug.LogError("Sqlite instance null en desafio4");
+            return;
+        }
+
+        DataRow dr = Sqlite.instance.ObtenerRespuestaPorIndiceYUnidad(imagenActual, unidadActual);
+        if (dr != null)
+        {
+            correcta = dr["Respuesta"].ToString();
+        }
+        else
+        {
+            Debug.LogError("No se encontró dato en BDD para U" + unidadActual + " Index" + imagenActual);
+            return; // O manejar error
         }
 
         Debug.Log($"R colisionada: {ultimaR}, Respuesta correcta: {correcta}");
@@ -148,7 +155,8 @@ public class desafio4 : MonoBehaviour
 
             if (correctas >= 5)
             {
-                SceneManager.LoadScene("Ganaste");
+                if (Sqlite.instance != null) Sqlite.instance.SetMasterDefeated("igmar");
+                SceneManager.LoadScene("GanasteFinal"); // Usually final scene differs? Or just "Ganaste"
                 return;
             }
         }

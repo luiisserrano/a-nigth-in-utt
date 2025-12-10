@@ -99,7 +99,7 @@ public class desafio3 : MonoBehaviour
             return;
         }
 
-        DataRow dr = Sqlite.instance.ObtenerDesafioPorIndexUnidad3(imagenActual);
+        DataRow dr = Sqlite.instance.ObtenerRespuestaPorIndiceYUnidad(imagenActual, 3);
 
         if (dr == null)
         {
@@ -116,6 +116,7 @@ public class desafio3 : MonoBehaviour
 
             if (correctas >= 5)
             {
+                if (Sqlite.instance != null) Sqlite.instance.SetMasterDefeated("rosales");
                 SceneManager.LoadScene("Ganaste");
                 return;
             }

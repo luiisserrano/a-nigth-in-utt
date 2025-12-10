@@ -38,8 +38,18 @@ public class ResetAndCounter : MonoBehaviour
 
         DeleteFileIfExists(visitedTagsPath, "Archivo de progreso borrado");
         DeleteFileIfExists(playerSavePath, "Archivo de posición borrado");
-        DeleteFileIfExists(usedItemsPath, "Archivo de items usados borrado");
         DeleteFileIfExists(visitCountPath, "Archivo de visitas borrado");
+        // usedItems.json ya no se usa, pero si existe lo borramos por limpieza
+        string usedItemsPath = Path.Combine(Application.persistentDataPath, "usedItems.json");
+        DeleteFileIfExists(usedItemsPath, "Archivo legacy items borrado");
+
+        // Reseteo de items y alumnos en BD
+        if (Sqlite.instance != null)
+        {
+            Sqlite.instance.ResetItems();
+            Sqlite.instance.ResetStudents();
+            Sqlite.instance.ResetMasters();
+        }
 
         // Reiniciar contador
         visitCount = 0;

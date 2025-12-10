@@ -28,19 +28,7 @@ public class RouletteSprite : MonoBehaviour
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        savePathItems = Path.Combine(Application.persistentDataPath, "usedItems.json");
         savePathPlayer = Path.Combine(Application.persistentDataPath, "playerSave.json");
-
-        // Cargar los items usados si existe el archivo
-        if (File.Exists(savePathItems))
-        {
-            string json = File.ReadAllText(savePathItems);
-            usedData = JsonUtility.FromJson<UsedItemsData>(json);
-        }
-        else
-        {
-            usedData = new UsedItemsData();
-        }
     }
 
     void OnEnable()
@@ -73,6 +61,7 @@ public class RouletteSprite : MonoBehaviour
 
         spriteRenderer.enabled = true;
 
+        // 1. Girar la ruleta
         while (timer < totalTime)
         {
             if (finished) yield break;
@@ -87,31 +76,63 @@ public class RouletteSprite : MonoBehaviour
             yield return new WaitForSeconds(speed);
         }
 
-        // --- Selección final evitando repetidos ---
-        List<int> availableIndices = new List<int>();
-        for (int i = 0; i < images.Length; i++)
+        // 2. Selección de Item (Protegido contra fallos)
+        bool success = false;
+        try 
         {
-            if (!usedData.usedIndices.Contains(i))
-                availableIndices.Add(i);
-        }
+            // --- Selección final evitando repetidos (Usando BDD) ---
+            List<int> usedIndices = new List<int>();
+            
+            // Protección por si Sqlite falla o no existe
+            if (Sqlite.instance != null)
+            {
+                usedIndices = Sqlite.instance.GetActiveItemIndices();
+            }
+            else
+            {
+                Debug.LogError("Sqlite instance es NULL en RouletteSprite.");
+            }
 
-        if (availableIndices.Count == 0)
+            List<int> availableIndices = new List<int>();
+
+            for (int i = 0; i < images.Length; i++)
+            {
+                if (!usedIndices.Contains(i))
+                    availableIndices.Add(i);
+            }
+
+            if (availableIndices.Count == 0)
+            {
+                Debug.Log("Todos los items ya salieron. Seleccionando uno aleatorio (Visual).");
+                int randomIndex = Random.Range(0, images.Length);
+                spriteRenderer.sprite = images[randomIndex];
+                // No guardamos nada
+            }
+            else
+            {
+                int finalIndex = availableIndices[Random.Range(0, availableIndices.Count)];
+                spriteRenderer.sprite = images[finalIndex];
+
+                // Guardar el item seleccionado en BDD
+                if (Sqlite.instance != null)
+                {
+                    Sqlite.instance.UpdateItemActive(finalIndex + 1, true);
+                    Debug.Log("Item obtenido: " + finalIndex + " (BD id: " + (finalIndex + 1) + ")");
+                }
+            }
+            success = true;
+        }
+        catch (System.Exception ex)
         {
-            Debug.LogWarning("Todos los items ya salieron. No hay más items disponibles.");
-            finished = true;
-            yield break; // Termina la ruleta sin seleccionar nada nuevo
+            Debug.LogError("Error crítico en RouletteSprite: " + ex.Message);
+            // Si falla, mostramos una imagen cualquiera para no dejar vacía la ruleta
+            spriteRenderer.sprite = images[Random.Range(0, images.Length)];
         }
-
-        int finalIndex = availableIndices[Random.Range(0, availableIndices.Count)];
-        spriteRenderer.sprite = images[finalIndex];
-
-        // Guardar el item seleccionado
-        usedData.usedIndices.Add(finalIndex);
-        File.WriteAllText(savePathItems, JsonUtility.ToJson(usedData));
 
         finished = true;
-
-        // Esperar 2 segundos antes de regresar a la escena
+        
+        // 3. Salida garantizada
+        Debug.Log("Regresando a la escena guardada en 2 segundos...");
         yield return new WaitForSeconds(2f);
         ReturnToSavedScene();
     }
@@ -129,7 +150,7 @@ public class RouletteSprite : MonoBehaviour
                 saveData.positionZ + 1f
             );
 
-            player.spawnPosition = newPosition;
+            player.spawnPosition = newPosition; // Asigna al static del player
 
             Debug.Log($"Posición original: ({saveData.positionX}, {saveData.positionY}, {saveData.positionZ})");
             Debug.Log($"Regresando a escena: {saveData.sceneName} en posición: ({newPosition.x}, {newPosition.y}, {newPosition.z})");

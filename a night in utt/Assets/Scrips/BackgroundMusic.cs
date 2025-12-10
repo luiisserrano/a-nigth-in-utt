@@ -14,7 +14,7 @@ public class BackgroundMusic : MonoBehaviour
             DontDestroyOnLoad(gameObject);
 
             // Evitar duplicados
-            BackgroundMusic[] musics = FindObjectsOfType<BackgroundMusic>();
+            BackgroundMusic[] musics = FindObjectsByType<BackgroundMusic>(FindObjectsSortMode.None);
             if (musics.Length > 1)
             {
                 Destroy(gameObject);
